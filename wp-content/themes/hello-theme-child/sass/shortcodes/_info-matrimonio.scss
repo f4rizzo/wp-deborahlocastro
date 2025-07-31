@@ -1,0 +1,38 @@
+@use "../util" as u;
+
+
+.matrimonio-info {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 0 10px;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  @include u.respond-to(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include u.respond-to(xl) {
+    padding: 0;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 6rem;
+  }
+  &__item {
+    border-bottom: 1px solid #000;
+    padding-bottom: 1.5rem;
+  }
+  &__label {
+    display: block;
+    font-weight: 400;
+    font-family: u.$ff-title;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+  &__value {
+    font-size: 1.25rem;
+    font-family: u.$ff-text;
+    line-height: 1.5rem;
+    margin: 0;
+  }
+}
