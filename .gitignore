@@ -1,0 +1,39 @@
+# Ignora tutto tranne il custom
+.DS_Store
+
+# Core WordPress
+/wp-admin/
+/wp-includes/
+index.php
+license.txt
+readme.html
+wp-activate.php
+wp-blog-header.php
+wp-comments-post.php
+wp-config.php
+wp-config-sample.php
+wp-cron.php
+wp-links-opml.php
+wp-load.php
+wp-login.php
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+xmlrpc.php
+local-xdebuginfo.php
+
+# Plugin e temi di terze parti
+/wp-content/plugins/*
+!/wp-content/plugins/custom-tools/
+
+/wp-content/themes/*
+!/wp-content/themes/hello-theme-child/
+
+# Altri file e Directory
+wp-content/languages
+wp-content/mu-plugins
+wp-content/upgrade
+wp-content/upgrade-temp-backup
+wp-content/uploads/*
+!/wp-content/uploads/elementor/css/

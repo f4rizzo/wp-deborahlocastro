@@ -1,0 +1,79 @@
+/* 
+Theme Name: Hello Elementor Child
+Theme URI: https://github.com/elementor/hello-theme-child/
+Description: Hello Elementor Child is a child theme of Hello Elementor, created by Elementor team
+Author: Elementor Team
+Author URI: https://elementor.com/
+Template: hello-elementor
+Version: 2.0.0
+Text Domain: hello-elementor-child
+License: GNU General Public License v3 or later.
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
+Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, featured-images, rtl-language-support, threaded-comments, translation-ready
+*/
+.matrimonio-info {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 0 10px;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+@media (min-width: 768px) {
+  .matrimonio-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1440px) {
+  .matrimonio-info {
+    padding: 0;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 6rem;
+  }
+}
+.matrimonio-info__item {
+  border-bottom: 1px solid #000;
+  padding-bottom: 1.5rem;
+}
+.matrimonio-info__label {
+  display: block;
+  font-weight: 400;
+  font-family: "Anton", Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.matrimonio-info__value {
+  font-size: 1.25rem;
+  font-family: "Literata", serif;
+  line-height: 1.5rem;
+  margin: 0;
+}
+
+.matrimonio-gallery-blocco {
+  max-width: 1158px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.matrimonio-gallery-blocco .gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.matrimonio-gallery-blocco .gallery-item.large {
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .matrimonio-gallery-blocco {
+    grid-template-columns: 1fr; /* Su mobile una colonna */
+    padding: 10px;
+  }
+  .matrimonio-gallery-blocco .gallery-item.large {
+    grid-column: unset;
+  }
+}
