@@ -52,6 +52,8 @@ add_action('after_setup_theme', function () {
     // Thumbnail per piccole anteprime (mantiene proporzioni, larghezza max 454px)
     add_image_size('portfolio_thumb', 454, 0, false); // true = crop / false = proporzioni originali
 
+    // Formato ottimizzato per immagini large (max 1500px di larghezza)
+    add_image_size('portfolio_large', 1500, 0, false); // Mantiene proporzioni
 });
 
 
@@ -61,6 +63,7 @@ function aggiungi_dimensioni_personalizzate($sizes)
 {
     return array_merge($sizes, [
         'portfolio_thumb' => 'Portfolio Thumb - 454 x 0 (454px)',
+        'portfolio_large'  => 'Portfolio Large - 1500px',
     ]);
 }
 
@@ -127,3 +130,156 @@ function portfolio_lightbox_shortcode()
 add_shortcode('portfolio_lightbox_item', 'portfolio_lightbox_shortcode');
 
 
+
+/**
+ * =========================================================
+ * Aggiunge la classe `.large` alle immagini marcate con meta
+ * =========================================================
+ *
+ * Questo codice intercetta l'output del widget Gallery di Elementor
+ * e aggiunge la classe `large` alle immagini che hanno
+ * il campo ACF (meta) `large_gallery_image` impostato su true.
+ */
+add_filter('elementor/widget/render_content', 'aggiungi_classi_large_gallery', 10, 2);
+
+function aggiungi_classi_large_gallery($content, $widget)
+{
+    if ('gallery' !== $widget->get_name()) {
+        return $content;
+    }
+
+    // Trova tutti gli ID delle immagini nel markup della gallery
+    preg_match_all('/wp-image-(\d+)/', $content, $matches);
+    if (!empty($matches[1])) {
+        foreach ($matches[1] as $image_id) {
+            $is_large = get_field('large_gallery_image', $image_id);
+            if ($is_large) {
+                $content = preg_replace(
+                    '/(wp-image-' . $image_id . ')/',
+                    '$1 large',
+                    $content
+                );
+            }
+        }
+    }
+
+    return $content;
+}
+
+/**
+ * =======================================================
+ * Funzione Helper: get_portfolio_thumb_url
+ * =======================================================
+ * Ritorna l'URL ottimizzato di un'immagine del portfolio
+ * in base al campo ACF 'large_gallery_image'.
+ *
+ * @param int $image_id L'ID dell'immagine in WP.
+ * @return string L'URL della thumb ottimizzata.
+ */
+function get_portfolio_thumb_url($image_id)
+{
+    // Verifica se il campo ACF 'large_gallery_image' è attivo
+    $is_large = get_field('large_gallery_image', $image_id);
+
+    // Determina il formato corretto
+    $size = $is_large ? 'portfolio_large' : 'large';
+
+    // Recupera l'array con i dati del formato immagine
+    $image_data = wp_get_attachment_image_src($image_id, $size);
+
+    // Se il formato esiste, ritorna l'URL, altrimenti l'URL originale
+    return $image_data ? $image_data[0] : wp_get_attachment_url($image_id);
+}
+
+
+
+
+
+/**
+ * =======================================================
+ * Shortcode: matrimonio_gallery_blocco1
+ * =======================================================
+ * Mostra la galleria immagini (parte 1) con gestione ottimizzata
+ * dei formati immagine (portfolio_large vs large).
+ */
+add_shortcode('matrimonio_gallery_blocco1', function () {
+    global $post;
+
+    // Recupera il campo ACF 'galleria_matrimonio_parte_1'
+    $gallery1 = get_field('galleria_matrimonio_parte_1', $post->ID);
+
+    if (empty($gallery1)) {
+        return '<p>Nessuna immagine disponibile nel Blocco 1.</p>';
+    }
+
+    ob_start();
+    echo '<div class="matrimonio-gallery-blocco blocco1">';
+
+    foreach ($gallery1 as $image) {
+        // URL ottimizzato della thumbnail
+        $thumb_url = get_portfolio_thumb_url($image['ID']);
+
+        // URL originale per la lightbox
+        $full_url = $image['url'];
+
+        // ALT text dell'immagine
+        $alt = esc_attr($image['alt']);
+
+        // Classe CSS per gestire layout delle immagini
+        $is_large = get_field('large_gallery_image', $image['ID']);
+        $class = $is_large ? 'gallery-item large' : 'gallery-item';
+
+        // Output HTML
+        echo "<a href='{$full_url}' class='{$class}'  data-elementor-open-lightbox='yes' data-elementor-lightbox-slideshow='matrimonio' rel='lightbox'>
+                <img src='{$thumb_url}' alt='{$alt}' loading='lazy' />
+              </a>";
+    }
+
+    echo '</div>';
+    return ob_get_clean();
+});
+
+
+/**
+ * =======================================================
+ * Shortcode: matrimonio_gallery_blocco2
+ * =======================================================
+ * Mostra la galleria immagini (parte 2) con la stessa logica
+ * del Blocco 1.
+ */
+add_shortcode('matrimonio_gallery_blocco2', function () {
+    global $post;
+
+    // Recupera il campo ACF 'galleria_matrimonio_parte_2'
+    $gallery2 = get_field('galleria_matrimonio_parte_2', $post->ID);
+
+    if (empty($gallery2)) {
+        return '<p>Nessuna immagine disponibile nel Blocco 2.</p>';
+    }
+
+    ob_start();
+    echo '<div class="matrimonio-gallery-blocco blocco2">';
+
+    foreach ($gallery2 as $image) {
+        // URL ottimizzato della thumbnail
+        $thumb_url = get_portfolio_thumb_url($image['ID']);
+
+        // URL originale per la lightbox
+        $full_url = $image['url'];
+
+        // ALT text dell'immagine
+        $alt = esc_attr($image['alt']);
+
+        // Classe CSS per gestire layout delle immagini
+        $is_large = get_field('large_gallery_image', $image['ID']);
+        $class = $is_large ? 'gallery-item large' : 'gallery-item';
+
+        // Output HTML
+        echo "<a href='{$full_url}' class='{$class}'  data-elementor-open-lightbox='yes' data-elementor-lightbox-slideshow='matrimonio' rel='lightbox'>
+                <img src='{$thumb_url}' alt='{$alt}' loading='lazy' />
+              </a>";
+    }
+
+    echo '</div>';
+    return ob_get_clean();
+});
