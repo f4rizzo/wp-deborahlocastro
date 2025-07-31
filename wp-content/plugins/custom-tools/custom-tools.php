@@ -26,7 +26,13 @@ require_once plugin_dir_path(__FILE__) . 'shortcodes/info-matrimonio.php';
  * archiviare tutto nella repo del progetto
  */
 add_filter('acf/settings/save_json', function () {
-    return plugin_dir_path(__FILE__) . 'assets/acf-json';
+    $path = plugin_dir_path(__FILE__) . 'assets/acf-json';
+
+    if (!file_exists($path)) {
+        mkdir($path, 0755, true);
+    }
+
+    return $path;
 });
 
 add_filter('acf/settings/load_json', function ($paths) {

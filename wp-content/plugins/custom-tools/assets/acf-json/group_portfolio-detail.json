@@ -1,0 +1,149 @@
+{
+    "key": "group_portfolio-detail",
+    "title": "Dettagli Elemento Portfolio",
+    "fields": [
+        {
+            "key": "field_685d9712610bb",
+            "label": "Immagine di Anteprima Portfolio",
+            "name": "immagine_anteprima_portfolio",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Sarà l'immagine rappresentativa della foto portfolio",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "uploader": "",
+            "acfe_thumbnail": 1,
+            "return_format": "array",
+            "required_message": "",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium",
+            "acfe_field_group_condition": 0,
+            "library": "all"
+        },
+        {
+            "key": "field_685d985e36111",
+            "label": "Immagine Originale Portfolio",
+            "name": "immagine_originale_portfolio",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Inserisci qui la foto originale",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "uploader": "",
+            "acfe_thumbnail": 0,
+            "return_format": "url",
+            "required_message": "",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium",
+            "acfe_field_group_condition": 0,
+            "library": "all"
+        },
+        {
+            "key": "field_685d99416524b",
+            "label": "Descrizione Portfolio",
+            "name": "descrizione_portfolio",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Una descrizione libera non obbligatoria",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "acfe_textarea_code": 0,
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "",
+            "acfe_field_group_condition": 0
+        },
+        {
+            "key": "field_68603e005f341",
+            "label": "Mostra in Home",
+            "name": "mostra_in_home",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Nota: In home vengono mostrate le 9 foto più recenti con la spunta attiva.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Spunta per mostrarle la foto in Home",
+            "default_value": 0,
+            "allow_in_bindings": 1,
+            "ui": 0,
+            "acfe_field_group_condition": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "style": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "portfolio"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "seamless",
+    "label_placement": "left",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "block_editor",
+        "comments",
+        "discussion",
+        "the_content"
+    ],
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfe_autosync": [
+        "php",
+        "json"
+    ],
+    "acfe_form": 0,
+    "acfe_display_title": "",
+    "acfe_meta": {
+        "685d9e0bd1654": {
+            "acfe_meta_key": "",
+            "acfe_meta_value": ""
+        }
+    },
+    "acfe_note": "",
+    "modified": 1753963912
+}
