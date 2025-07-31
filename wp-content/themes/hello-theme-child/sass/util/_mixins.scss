@@ -1,0 +1,15 @@
+@use 'sass:map';
+@use 'variables';
+
+// Mixin reattivo per breakpoint mobile-first
+// @param {String} $label — nome del breakpoint (chiave nella mappa)
+@mixin respond-to($label) {
+  @if map.has-key(variables.$breakpoints, $label) {
+    $size: map.get(variables.$breakpoints, $label);
+    @media (min-width: $size) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint “#{$label}” non definito in $breakpoints.";
+  }
+}
