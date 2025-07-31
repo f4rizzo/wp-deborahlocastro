@@ -1,0 +1,32 @@
+{
+  "liveSassCompile.settings.formats": [
+    // This is Default.
+    {
+      "format": "expanded",
+      "extensionName": ".css",
+      "savePath": "/wp-content/themes/hello-theme-child/dist/css"
+    },
+    {
+      "format": "compressed",
+      "extensionName": ".css",
+      "savePath": "/wp-content/themes/hello-theme-child"
+    }
+    // You can add more
+    // {
+    //   "format": "compressed",
+    //   "extensionName": ".min.css",
+    //   "savePath": "/dist/css"
+    // }
+  ],
+  "liveSassCompile.settings.excludeList": [
+    "/**/node_modules/**",
+    "/**/bootstrap/scss/**",
+    "/.vscode/**",
+    "/**/wp-admin/**",
+    "/**/wp-includes/**",
+    "/**/wp-content/plugins/**"
+  ],
+  "liveSassCompile.settings.generateMap": false,
+  "liveSassCompile.settings.autoprefix": [],
+  "liveServer.settings.port": 5501
+}
