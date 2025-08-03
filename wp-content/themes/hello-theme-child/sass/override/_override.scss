@@ -1,0 +1,37 @@
+
+/*
+
+ * =======================================================
+ * Override - Image Lightbox
+ * =======================================================
+
+ * Se non è presente un widget galley di elementor nella pagina,
+ * le frecce di navigazione prev/next non vengono stilizzate.
+ * Questo css risolve il problema.
+ */
+
+
+// .elementor-element .swiper .elementor-swiper-button,
+// .elementor-element .swiper~.elementor-swiper-button,
+.elementor-lightbox .swiper .elementor-swiper-button,
+.elementor-lightbox .swiper~.elementor-swiper-button {
+    color: hsla(0, 0%, 93%, .9);
+    cursor: pointer;
+    display: inline-flex;
+    font-size: var(--lightbox-navigation-icons-size);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+
+// .elementor-element .swiper .elementor-swiper-button svg,
+// .elementor-element .swiper~.elementor-swiper-button svg,
+.elementor-lightbox .swiper .elementor-swiper-button svg,
+.elementor-lightbox .swiper~.elementor-swiper-button svg {
+    // height: 1em;
+    // width: 1em;
+    height: var(--lightbox-navigation-icons-size);
+    width: var(--lightbox-navigation-icons-size);
+}

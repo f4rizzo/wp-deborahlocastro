@@ -1,6 +1,12 @@
 @use "../util" as u;
 
 
+/*
+ * =======================================================
+ * Matrimonio - Grid Info
+ * =======================================================
+ */
+
 .matrimonio-info {
   display: grid;
   grid-template-columns: 1fr;

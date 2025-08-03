@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* 
 Theme Name: Hello Elementor Child
 Theme URI: https://github.com/elementor/hello-theme-child/
@@ -11,6 +12,39 @@ License: GNU General Public License v3 or later.
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, featured-images, rtl-language-support, threaded-comments, translation-ready
 */
+/*
+
+ * =======================================================
+ * Override - Image Lightbox
+ * =======================================================
+
+ * Se non è presente un widget galley di elementor nella pagina,
+ * le frecce di navigazione prev/next non vengono stilizzate.
+ * Questo css risolve il problema.
+ */
+.elementor-lightbox .swiper .elementor-swiper-button,
+.elementor-lightbox .swiper ~ .elementor-swiper-button {
+  color: hsla(0, 0%, 93%, 0.9);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--lightbox-navigation-icons-size);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.elementor-lightbox .swiper .elementor-swiper-button svg,
+.elementor-lightbox .swiper ~ .elementor-swiper-button svg {
+  height: var(--lightbox-navigation-icons-size);
+  width: var(--lightbox-navigation-icons-size);
+}
+
+/*
+ * =======================================================
+ * Matrimonio - Grid Info
+ * =======================================================
+ */
 .matrimonio-info {
   display: grid;
   grid-template-columns: 1fr;
@@ -51,29 +85,32 @@ Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, fe
   margin: 0;
 }
 
-.matrimonio-gallery-blocco {
+/*
+
+ * =======================================================
+ * Modular Media Gallery
+ * =======================================================
+
+ */
+.modular-gallery {
   max-width: 1158px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+  grid-template-columns: 1fr; /* Su mobile una colonna */
+  padding: 10px;
 }
-
-.matrimonio-gallery-blocco .gallery-item img {
+@media (min-width: 1440px) {
+  .modular-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.modular-gallery__item img {
   width: 100%;
   height: auto;
   display: block;
 }
-
-.matrimonio-gallery-blocco .gallery-item.large {
-  grid-column: span 2;
-}
-
-@media (max-width: 768px) {
-  .matrimonio-gallery-blocco {
-    grid-template-columns: 1fr; /* Su mobile una colonna */
-    padding: 10px;
-  }
-  .matrimonio-gallery-blocco .gallery-item.large {
-    grid-column: unset;
+@media (min-width: 1440px) {
+  .modular-gallery__item.large {
+    grid-column: span 2;
   }
 }

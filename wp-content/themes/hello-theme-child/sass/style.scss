@@ -23,5 +23,6 @@ Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, fe
 
 
 // # Base
+@forward "override/override";
 @forward "shortcodes";
 @forward "util";
