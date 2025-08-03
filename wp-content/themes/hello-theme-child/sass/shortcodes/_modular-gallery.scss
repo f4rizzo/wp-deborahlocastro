@@ -1,0 +1,31 @@
+@use "../util" as u;
+
+/*
+
+ * =======================================================
+ * Modular Media Gallery
+ * =======================================================
+
+ */
+
+.modular-gallery {
+  max-width: 1158px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr; /* Su mobile una colonna */
+  padding: 10px;
+  @include u.respond-to(xl) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &__item img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  @include u.respond-to(xl) {
+    &__item.large {
+      grid-column: span 2;
+    }
+  }
+}

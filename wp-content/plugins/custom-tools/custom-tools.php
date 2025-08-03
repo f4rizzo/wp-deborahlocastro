@@ -14,6 +14,7 @@ if (!defined('ABSPATH')) exit;
 require_once plugin_dir_path(__FILE__) . 'inc/register-cpt.php';
 require_once plugin_dir_path(__FILE__) . 'inc/admin-columns.php';
 require_once plugin_dir_path(__FILE__) . 'shortcodes/info-matrimonio.php';
+require_once plugin_dir_path(__FILE__) . 'shortcodes/modular-gallery.php';
 
 // require_once plugin_dir_path(__FILE__) . 'inc/acf-fields.php'; // se ti serve in futuro
 
@@ -39,8 +40,6 @@ add_filter('acf/settings/load_json', function ($paths) {
     $paths[] = plugin_dir_path(__FILE__) . 'assets/acf-json';
     return $paths;
 });
-
-
 
 
 /**
@@ -140,7 +139,7 @@ add_shortcode('portfolio_lightbox_item', 'portfolio_lightbox_shortcode');
 
 /**
  * =========================================================
- * Aggiunge la classe `.large` alle immagini marcate con meta
+ * Aggiunge la classe `.large` alle immagini marcate con meta large = true
  * =========================================================
  *
  * Questo codice intercetta l'output del widget Gallery di Elementor
@@ -197,96 +196,3 @@ function get_portfolio_thumb_url($image_id)
     // Se il formato esiste, ritorna l'URL, altrimenti l'URL originale
     return $image_data ? $image_data[0] : wp_get_attachment_url($image_id);
 }
-
-
-
-
-
-/**
- * =======================================================
- * Shortcode: matrimonio_gallery_blocco1
- * =======================================================
- * Mostra la galleria immagini (parte 1) con gestione ottimizzata
- * dei formati immagine (portfolio_large vs large).
- */
-add_shortcode('matrimonio_gallery_blocco1', function () {
-    global $post;
-
-    // Recupera il campo ACF 'galleria_matrimonio_parte_1'
-    $gallery1 = get_field('galleria_matrimonio_parte_1', $post->ID);
-
-    if (empty($gallery1)) {
-        return '<p>Nessuna immagine disponibile nel Blocco 1.</p>';
-    }
-
-    ob_start();
-    echo '<div class="matrimonio-gallery-blocco blocco1">';
-
-    foreach ($gallery1 as $image) {
-        // URL ottimizzato della thumbnail
-        $thumb_url = get_portfolio_thumb_url($image['ID']);
-
-        // URL originale per la lightbox
-        $full_url = $image['url'];
-
-        // ALT text dell'immagine
-        $alt = esc_attr($image['alt']);
-
-        // Classe CSS per gestire layout delle immagini
-        $is_large = get_field('large_gallery_image', $image['ID']);
-        $class = $is_large ? 'gallery-item large' : 'gallery-item';
-
-        // Output HTML
-        echo "<a href='{$full_url}' class='{$class}'  data-elementor-open-lightbox='yes' data-elementor-lightbox-slideshow='matrimonio' rel='lightbox'>
-                <img src='{$thumb_url}' alt='{$alt}' loading='lazy' />
-              </a>";
-    }
-
-    echo '</div>';
-    return ob_get_clean();
-});
-
-
-/**
- * =======================================================
- * Shortcode: matrimonio_gallery_blocco2
- * =======================================================
- * Mostra la galleria immagini (parte 2) con la stessa logica
- * del Blocco 1.
- */
-add_shortcode('matrimonio_gallery_blocco2', function () {
-    global $post;
-
-    // Recupera il campo ACF 'galleria_matrimonio_parte_2'
-    $gallery2 = get_field('galleria_matrimonio_parte_2', $post->ID);
-
-    if (empty($gallery2)) {
-        return '<p>Nessuna immagine disponibile nel Blocco 2.</p>';
-    }
-
-    ob_start();
-    echo '<div class="matrimonio-gallery-blocco blocco2">';
-
-    foreach ($gallery2 as $image) {
-        // URL ottimizzato della thumbnail
-        $thumb_url = get_portfolio_thumb_url($image['ID']);
-
-        // URL originale per la lightbox
-        $full_url = $image['url'];
-
-        // ALT text dell'immagine
-        $alt = esc_attr($image['alt']);
-
-        // Classe CSS per gestire layout delle immagini
-        $is_large = get_field('large_gallery_image', $image['ID']);
-        $class = $is_large ? 'gallery-item large' : 'gallery-item';
-
-        // Output HTML
-        echo "<a href='{$full_url}' class='{$class}'  data-elementor-open-lightbox='yes' data-elementor-lightbox-slideshow='matrimonio' rel='lightbox'>
-                <img src='{$thumb_url}' alt='{$alt}' loading='lazy' />
-              </a>";
-    }
-
-    echo '</div>';
-    return ob_get_clean();
-});
