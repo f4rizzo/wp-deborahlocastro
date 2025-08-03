@@ -37,3 +37,4 @@ wp-content/upgrade
 wp-content/upgrade-temp-backup
 wp-content/uploads/*
 !/wp-content/uploads/elementor/css/
+export/db-dumps
