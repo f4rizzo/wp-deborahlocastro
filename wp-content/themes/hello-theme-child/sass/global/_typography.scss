@@ -1,0 +1,14 @@
+@use "../util" as u;
+
+.header-title {
+  font-size: clamp(1rem, 7vw, 3.875rem) !important;
+  &__secondRow {
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-family: u.$ff-title;
+    font-style: normal;
+    font-size: clamp(2rem, 10vw, 6.188rem);
+    line-height: 1.2 ;
+    font-weight: 400;
+  }
+}

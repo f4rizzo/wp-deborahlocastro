@@ -40,6 +40,19 @@ Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, fe
   width: var(--lightbox-navigation-icons-size);
 }
 
+.header-title {
+  font-size: clamp(1rem, 7vw, 3.875rem) !important;
+}
+.header-title__secondRow {
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-family: "Anton", Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-size: clamp(2rem, 10vw, 6.188rem);
+  line-height: 1.2;
+  font-weight: 400;
+}
+
 /*
  * =======================================================
  * Matrimonio - Grid Info
@@ -48,7 +61,7 @@ Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, fe
 .matrimonio-info {
   display: grid;
   grid-template-columns: 1fr;
-  padding: 0 10px;
+  padding: 0 15px;
   gap: 1.5rem;
   margin-top: 3rem;
   margin-bottom: 3rem;
@@ -60,9 +73,10 @@ Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, fe
 }
 @media (min-width: 1440px) {
   .matrimonio-info {
-    padding: 0;
+    padding: 0 25px;
     grid-template-columns: repeat(3, 1fr);
-    margin-bottom: 6rem;
+    margin-top: 4.1rem;
+    margin-bottom: 8rem;
   }
 }
 .matrimonio-info__item {
