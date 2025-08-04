@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) exit;
 // Includi i file delle funzionalità
 require_once plugin_dir_path(__FILE__) . 'inc/register-cpt.php';
 require_once plugin_dir_path(__FILE__) . 'inc/admin-columns.php';
-require_once plugin_dir_path(__FILE__) . 'shortcodes/info-matrimonio.php';
+require_once plugin_dir_path(__FILE__) . 'shortcodes/matrimonio.php';
 require_once plugin_dir_path(__FILE__) . 'shortcodes/modular-gallery.php';
 
 // require_once plugin_dir_path(__FILE__) . 'inc/acf-fields.php'; // se ti serve in futuro
