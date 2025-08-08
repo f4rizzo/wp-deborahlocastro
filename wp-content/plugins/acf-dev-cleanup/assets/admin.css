@@ -1,0 +1,127 @@
+/* Stili generali per il wrapper del plugin */
+.acf-dev-cleanup-wrap {
+  margin-top: 20px;
+}
+
+/* Header */
+.acf-cleanup-header {
+  background: #fff;
+  border-bottom: 1px solid #ccd0d4;
+  padding: 20px;
+  margin-left: -20px; /* Allinea con il menu */
+}
+.acf-cleanup-header h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  margin: 0 0 10px 0;
+}
+.acf-cleanup-header .description {
+  font-size: 16px;
+  color: #50575e;
+}
+
+/* Tabs di navigazione */
+.nav-tab-wrapper {
+  margin-bottom: 20px;
+}
+
+/* Dashboard / Pagina di benvenuto */
+.acf-cleanup-dashboard .welcome-panel {
+  margin-bottom: 20px;
+}
+.acf-cleanup-dashboard .action-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.action-card {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ccd0d4;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+.action-card h3 {
+  margin-top: 0;
+}
+.action-card form {
+  margin-top: 20px;
+}
+
+/* Pagina Impostazioni */
+.settings-page .settings-section {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ccd0d4;
+  margin-bottom: 20px;
+}
+.environment-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #fff;
+}
+.environment-badge.dev {
+  background-color: #2271b1; /* Blu WordPress */
+}
+.environment-badge.prod {
+  background-color: #d63638; /* Rosso allarme */
+}
+.support-links {
+  display: flex;
+  gap: 10px;
+}
+
+/* Risultati Analisi */
+#analysis-summary {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ccd0d4;
+  margin-bottom: 20px;
+}
+#analysis-summary .actions {
+  margin-top: 15px;
+}
+.count-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+.count-badge.unused {
+  background-color: #f59e0b;
+} /* Ambra */
+.count-badge.orphaned {
+  background-color: #ef4444;
+} /* Rosso */
+.count-badge.empty {
+  background-color: #8b5cf6;
+} /* Viola */
+
+.analysis-section {
+  margin-bottom: 30px;
+}
+.analysis-section h3 {
+  border-bottom: 1px solid #ccd0d4;
+  padding-bottom: 5px;
+}
+
+/* Pagina di pulizia */
+.cleanup-interface .notice,
+.cleanup-interface .backup-checklist {
+  background: #fff;
+  border-left-width: 4px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.cleanup-interface .backup-checklist ul {
+  margin-top: 10px;
+  list-style-type: none;
+  padding-left: 0;
+}
+.cleanup-interface .backup-checklist li {
+  font-size: 14px;
+}
