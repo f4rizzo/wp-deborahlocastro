@@ -431,8 +431,7 @@
         "categories",
         "comments",
         "discussion",
-        "the_content",
-        "excerpt"
+        "the_content"
     ],
     "active": true,
     "description": "",
@@ -444,5 +443,5 @@
     "acfe_display_title": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1753964072
+    "modified": 1754491996
 }

@@ -79,7 +79,8 @@
     "has_archive": false,
     "has_archive_slug": "",
     "rewrite": {
-        "permalink_rewrite": "post_type_key",
+        "permalink_rewrite": "custom_permalink",
+        "slug": "real-wedding",
         "with_front": "1",
         "feeds": "1",
         "pages": "1"
@@ -90,5 +91,5 @@
     "delete_with_user": false,
     "register_meta_box_cb": "",
     "enter_title_here": "",
-    "modified": 1753964038
+    "modified": 1754584473
 }
