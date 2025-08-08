@@ -173,6 +173,46 @@ function aggiungi_classi_large_gallery($content, $widget)
     return $content;
 }
 
+
+function aggiungi_classi_gallery_size_select($content, $widget)
+{
+    if ('gallery' !== $widget->get_name()) {
+        return $content;
+    }
+
+    preg_match_all('/wp-image-(\d+)/', $content, $matches);
+
+    if (empty($matches[1])) {
+        return $content;
+    }
+
+    foreach ($matches[1] as $image_id) {
+        $size = get_field('gallery_image_size', $image_id);
+
+        $classe = '';
+        switch ($size) {
+            case 'large':
+                $classe = 'large';
+                break;
+            case 'tall':
+                $classe = 'tall';
+                break;
+            default:
+                continue 2; // Salta al prossimo ID se è 'normal' o vuoto
+        }
+
+        if ($classe) {
+            $content = preg_replace(
+                '/(wp-image-' . $image_id . ')/',
+                '$1 ' . $classe,
+                $content
+            );
+        }
+    }
+
+    return $content;
+}
+
 /**
  * =======================================================
  * Funzione Helper: get_portfolio_thumb_url

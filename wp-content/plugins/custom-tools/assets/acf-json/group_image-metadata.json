@@ -4,10 +4,10 @@
     "fields": [
         {
             "key": "field_688794fa3b2bb",
-            "label": "Immagine Grande",
-            "name": "large_gallery_image",
+            "label": "Ingombro Gallery",
+            "name": "gallery_image_size",
             "aria-label": "",
-            "type": "true_false",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,14 +16,28 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Si, imposta come \"large\" nella galleria",
-            "default_value": 0,
+            "choices": {
+                "default": "Disposizione automatica",
+                "large": "Larga: Immagine su due colonne",
+                "tall": "Alta: Immagine su due righe"
+            },
+            "default_value": "default",
+            "return_format": "value",
+            "multiple": 0,
+            "max": "",
+            "prepend": "",
+            "append": "",
+            "allow_null": 0,
             "allow_in_bindings": 0,
             "ui": 0,
             "acfe_field_group_condition": 0,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "style": ""
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0,
+            "allow_custom": 0,
+            "search_placeholder": "",
+            "min": ""
         }
     ],
     "location": [
@@ -51,5 +65,5 @@
     "acfe_display_title": "",
     "acfe_meta": "",
     "acfe_note": "",
-    "modified": 1753964095
+    "modified": 1754668667
 }
