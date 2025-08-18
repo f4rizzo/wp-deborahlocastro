@@ -26,7 +26,6 @@ local-xdebuginfo.php
 # Plugin e temi di terze parti
 /wp-content/plugins/*
 !/wp-content/plugins/custom-tools/
-!/wp-content/plugins/acf-dev-cleanup/
 
 /wp-content/themes/*
 !/wp-content/themes/hello-theme-child/
