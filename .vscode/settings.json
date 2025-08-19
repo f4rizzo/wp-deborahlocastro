@@ -7,7 +7,7 @@
       "savePath": "/wp-content/themes/hello-theme-child/dist/css"
     },
     {
-      "format": "compressed",
+      "format": "expanded",
       "extensionName": ".css",
       "savePath": "/wp-content/themes/hello-theme-child"
     }

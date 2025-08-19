@@ -238,3 +238,76 @@ Eseguire automaticamente `export-db.sh` ogni giorno alle ore 10:00 per salvare u
 - MySQL/MariaDB CLI tools (es. `mysqldump`, `mysql`)
 - Permessi sufficienti per accedere al database
 - Script testati su macOS (Apple Silicon)
+
+
+
+
+## Info Git
+
+## 💻 Workflow con VS Code
+
+### Setup iniziale
+1. Apri il progetto principale in VS Code
+2. Installa l'estensione **GitLens** per una migliore gestione Git
+3. I submodules appariranno come cartelle separate con il loro stato Git
+
+### Lavorare sui componenti
+
+#### Modifiche al Plugin
+1. Naviga in `wp-content/plugins/custom-tools/`
+2. Modifica i file del plugin
+3. Usa il pannello **Source Control** di VS Code:
+   - Vedrai i cambiamenti nel plugin sotto la sezione del submodule
+   - Stage e committa i file del plugin
+   - Push direttamente dalla repo del plugin
+
+#### Modifiche al Tema  
+1. Naviga in `wp-content/themes/hello-theme-child/`
+2. Modifica i file del tema
+3. Usa il pannello **Source Control** di VS Code:
+   - Stage e committa i file del tema
+   - Push direttamente dalla repo del tema
+
+#### Aggiornamento del progetto principale
+Dopo ogni push di plugin/tema, VS Code mostrerà:
+- Il file `.gitmodules` o le directory dei submodules come "modificate"
+- Questo indica che il riferimento al commit è cambiato
+
+Per aggiornare:
+1. Stage le modifiche ai submodules nel progetto principale
+2. Commit con messaggio tipo: `"Updated plugin to version X.X"`
+3. Push del progetto principale
+
+### Comandi da terminale integrato (opzionale)
+
+```bash
+# Aggiorna tutti i submodules alle ultime versioni
+git submodule update --remote
+
+# Verifica stato di tutti i submodules  
+git submodule status
+
+# Clone per nuovi collaboratori
+git clone --recursive https://github.com/f4rizzo/wp-deborahlocastro.git
+```
+
+### Gestione branches nei submodules
+
+Se lavori su feature branches:
+```bash
+# Nel submodule del plugin
+cd wp-content/plugins/custom-tools
+git checkout -b feature/nuova-funzionalità
+# ... sviluppa e committa
+git push origin feature/nuova-funzionalità
+
+# Nel progetto principale, il submodule punterà al nuovo branch
+git add wp-content/plugins/custom-tools
+git commit -m "Plugin: working on new feature branch"
+```
+
+### Tips VS Code
+- Usa **Ctrl/Cmd + Shift + G** per accedere rapidamente al Source Control
+- GitLens mostra l'autore e la data dell'ultimo commit per ogni riga
+- Il terminale integrato permette comandi Git specifici quando necessario
+- Ogni submodule ha il suo stato Git indipendente nel pannello Source Control
