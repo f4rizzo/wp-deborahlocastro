@@ -23,8 +23,14 @@ wp-trackback.php
 xmlrpc.php
 local-xdebuginfo.php
 
-# Tutta la cartella wp-content ora (gestita con submodules)
-/wp-content/
+# Ignora wp-content ma PERMETTI i submodules specifici
+/wp-content/*
+!/wp-content/plugins/
+/wp-content/plugins/*
+!/wp-content/plugins/custom-tools/
+!/wp-content/themes/
+/wp-content/themes/*
+!/wp-content/themes/hello-theme-child/
 
 # Altri file e Directory
 export/db-dumps
