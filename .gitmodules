@@ -1,0 +1,6 @@
+[submodule "wp-content/plugins/custom-tools"]
+	path = wp-content/plugins/custom-tools
+	url = https://github.com/f4rizzo/wp-plugin_custom-tools.git
+[submodule "wp-content/themes/hello-theme-child"]
+	path = wp-content/themes/hello-theme-child
+	url = https://github.com/f4rizzo/wp-theme_hello-theme-child.git
