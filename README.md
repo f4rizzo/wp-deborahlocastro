@@ -6,12 +6,13 @@ Progetto WordPress con architettura modulare che separa i componenti custom in r
 
 ## 📁 Struttura del progetto versionato
 
+```
 wp-content/                    ← repository principale
 ├── plugins/
 │   └── custom-tools/          ← submodule
 └── themes/
     └── hello-theme-child/     ← submodule
-
+```
 
 ## 🏗️ Architettura
 
