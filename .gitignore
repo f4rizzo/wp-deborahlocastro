@@ -23,18 +23,8 @@ wp-trackback.php
 xmlrpc.php
 local-xdebuginfo.php
 
-# Plugin e temi di terze parti
-/wp-content/plugins/*
-!/wp-content/plugins/custom-tools/
-
-/wp-content/themes/*
-!/wp-content/themes/hello-theme-child/
+# Tutta la cartella wp-content ora (gestita con submodules)
+/wp-content/
 
 # Altri file e Directory
-wp-content/languages
-wp-content/mu-plugins
-wp-content/upgrade
-wp-content/upgrade-temp-backup
-wp-content/uploads/*
-!/wp-content/uploads/elementor/css/
 export/db-dumps
