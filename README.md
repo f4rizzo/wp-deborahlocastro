@@ -172,7 +172,7 @@ Script Bash che esegue l’**esportazione del database** in formato `.sql`, con 
 Esempio di output:
 
 ```
-deborahlocastro_backup_2025-07-30_10-00-00.sql
+nomeprogetto_backup_2025-07-30_10-00-00.sql
 ```
 
 #### `import-db.sh`
@@ -311,3 +311,47 @@ git commit -m "Plugin: working on new feature branch"
 - GitLens mostra l'autore e la data dell'ultimo commit per ogni riga
 - Il terminale integrato permette comandi Git specifici quando necessario
 - Ogni submodule ha il suo stato Git indipendente nel pannello Source Control
+
+
+### Risolvere l’errore fatal: You are not currently on a branch
+
+Se provi a fare push direttamente dalla modalità detached HEAD riceverai un errore come questo:
+
+```
+fatal: You are not currently on a branch.
+```
+
+#### Per risolvere:
+```bash
+# 1.	Controlla i branch disponibili
+git branch -a
+
+# 2.	Passa a quello corretto
+git checkout main
+
+#	3.	Poi fai commit e push normalmente.
+cd <repo-principale>
+git add path/del/submodule
+git commit -m "Aggiornato submodule al nuovo commit"
+git push
+```
+
+
+## 📂 Gestione dei file ACF (Advanced Custom Fields)
+
+Per mantenere sincronizzati i campi personalizzati tra ambiente locale e produzione, utilizziamo la cartella `assets/acf-json` all'interno del plugin.
+
+### 🔄 Come importare i file ACF
+1. Accedi al **Backoffice di WordPress**.
+2. Vai su **Custom Fields > Field Groups**.
+3. Se esistono differenze tra i file JSON e i campi presenti nel database:
+   - Vedrai la voce **"Sync available"** accanto ai gruppi di campi.
+4. Clicca su **Sync** per importare i file dal JSON al database di WordPress.
+5. Ora i campi sono disponibili e modificabili normalmente dal pannello ACF.
+
+### 📤 Esportazione automatica
+- Ogni volta che modifichi un gruppo di campi dal backoffice, ACF salva automaticamente un file JSON aggiornato nella cartella `assets/acf-json`.
+
+### ✅ Buone pratiche
+- Versionare la cartella `assets/acf-json` con Git per mantenere i campi sincronizzati tra sviluppatori e ambienti.
+- Non modificare direttamente i file JSON: gestire sempre i campi dal backoffice di WordPress.

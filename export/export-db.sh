@@ -2,11 +2,11 @@
 
 # === CONFIGURAZIONE ===
 
-EXPORT_PATH="/Users/fabrizio/Project/Local Site/deborahlocastro/app/public/export/db-dumps"
+EXPORT_PATH="/Users/fabrizio/Project/Local Site/dblc/app/public/export/db-dumps"
 EXPORT_NAME="dump-$(date +%Y%m%d_%H%M%S).sql"
 #Estratto da Local
 MYSQLDUMP="/Users/fabrizio/Library/Application Support/Local/lightning-services/mysql-8.0.35+4/bin/darwin-arm64/bin/mysqldump"
-SOCKET_PATH="/Users/fabrizio/Library/Application Support/Local/run/L-YkgLqnA/mysql/mysqld.sock"
+SOCKET_PATH="/Users/fabrizio/Library/Application Support/Local/run/CsXBKk1Yi/mysql/mysqld.sock"
 
 DB_NAME="local"              # Nome del DB, cambia se diverso
 DB_USER="root"
