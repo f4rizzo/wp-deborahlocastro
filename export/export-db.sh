@@ -1,48 +1,59 @@
 #!/bin/bash
+#
+# export-db.sh — Esporta il database del sito Local in un file .sql con timestamp.
+#
+# Portabile: NON contiene percorsi assoluti. Carica l'ambiente del sito da
+# app/.envrc (rigenerato da Local a ogni avvio) e usa WP-CLI, che ricava
+# nome DB, credenziali e socket da wp-config.php + MYSQL_HOME.
+#
+# Requisiti: il sito dev'essere avviato in Local.
+#
+# Uso:
+#   ./export-db.sh
+#   (eseguibile anche da cron, purché il sito sia in esecuzione)
+#
+set -uo pipefail
 
-# === CONFIGURAZIONE ===
+# --- Percorsi relativi allo script ------------------------------------------
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PUBLIC_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"          # .../app/public
+ENVRC="$(cd "$PUBLIC_DIR/.." && pwd)/.envrc"        # .../app/.envrc
 
-EXPORT_PATH="/Users/fabrizio/Project/Local Site/dblc/app/public/export/db-dumps"
-EXPORT_NAME="dump-$(date +%Y%m%d_%H%M%S).sql"
-#Estratto da Local
-MYSQLDUMP="/Users/fabrizio/Library/Application Support/Local/lightning-services/mysql-8.0.35+4/bin/darwin-arm64/bin/mysqldump"
-SOCKET_PATH="/Users/fabrizio/Library/Application Support/Local/run/CsXBKk1Yi/mysql/mysqld.sock"
+EXPORT_PATH="$SCRIPT_DIR/db-dumps"
+EXPORT_FILE="$EXPORT_PATH/dump-$(date +%Y%m%d_%H%M%S).sql"
+KEEP=3                                              # quanti dump conservare
 
-DB_NAME="local"              # Nome del DB, cambia se diverso
-DB_USER="root"
-DB_PASSWORD="root"       # Prendi la password da Local, se diversa
+# --- Ambiente di Local (PATH -> wp/mysql, MYSQL_HOME -> socket/credenziali) --
+have_local_env() {
+  command -v wp >/dev/null 2>&1 && [ -n "${MYSQL_HOME:-}" ]
+}
 
-# === CREA CARTELLA SE NON ESISTE ===
-mkdir -p "$EXPORT_PATH"
-
-# === ESEGUI DUMP ===
-"$MYSQLDUMP" \
-  --user="$DB_USER" \
-  --password="$DB_PASSWORD" \
-  --socket="$SOCKET_PATH" \
-  "$DB_NAME" > "$EXPORT_PATH/$EXPORT_NAME"
-
-# === VERIFICA SUCCESSO E PULIZIA ===
-if [ $? -eq 0 ]; then
-  echo "✅ Dump completato: $EXPORT_PATH/$EXPORT_NAME"
-
-  # === PULIZIA VECCHI DUMP (MANTIENI GLI ULTIMI 3) ===
-  echo "🧹 Inizio la pulizia dei vecchi dump..."
-  (
-    cd "$EXPORT_PATH" || exit
-    # Conta il numero di dump presenti
-    NUM_FILES=$(ls -1 dump-*.sql 2>/dev/null | wc -l)
-
-    if [ "$NUM_FILES" -gt 3 ]; then
-      # Elenca i file per data (dal più nuovo al più vecchio),
-      # salta i primi 3 e cancella gli altri.
-      ls -1t dump-*.sql | tail -n +4 | xargs rm
-      echo "🗑️  Dump più vecchi eliminati correttamente."
-    else
-      echo "👍 Non ci sono vecchi dump da eliminare (limite di 3 non superato)."
-    fi
-  )
-
-else
-  echo "❌ Errore durante il dump del database."
+if ! have_local_env; then
+  [ -f "$ENVRC" ] && . "$ENVRC"
 fi
+
+if ! have_local_env; then
+  echo "❌ Ambiente Local non trovato."
+  echo "   Avvia il sito in Local e riprova, oppure lancia lo script dalla"
+  echo "   shell del sito (Local ▸ tasto destro sul sito ▸ Open site shell)."
+  exit 1
+fi
+
+# --- Dump -------------------------------------------------------------------
+mkdir -p "$EXPORT_PATH"
+echo "📦 Export database → $EXPORT_FILE"
+
+if wp --path="$PUBLIC_DIR" db export "$EXPORT_FILE" --defaults; then
+  echo "✅ Dump completato ($(du -h "$EXPORT_FILE" | cut -f1))"
+else
+  echo "❌ Export fallito. Il sito è avviato in Local?"
+  rm -f "$EXPORT_FILE"
+  exit 1
+fi
+
+# --- Pulizia: mantieni solo gli ultimi $KEEP dump --------------------------
+{ ls -1t "$EXPORT_PATH"/dump-*.sql 2>/dev/null || true; } \
+  | tail -n +"$((KEEP + 1))" \
+  | while IFS= read -r old; do
+      rm -f "$old" && echo "🗑️  Rimosso vecchio dump: $(basename "$old")"
+    done
