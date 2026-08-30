@@ -163,81 +163,57 @@ Per problemi o contributi ai singoli componenti, usa le repository specifiche:
 
 ## 🗃️ Gestione Backup Database
 
-### 📄 File disponibili
+Due meccanismi complementari, entrambi legati **all'uso del progetto** e non alla
+macchina. Tutti i dump finiscono in `export/db-dumps/` (nome `dump-<YYYYMMDD_HHMMSS>.sql`,
+cartella esclusa da Git) e vengono ruotati tenendo solo gli **ultimi 3**.
 
-#### `export-db.sh`
+### 🔄 Backup automatico — `wp-content/mu-plugins/db-autobackup.php`
 
-Script Bash che esegue l’**esportazione del database** in formato `.sql`, con **data e ora incluse nel nome del file** per una gestione cronologica dei backup. Il file viene salvato nella directory `public/export` del progetto.
+mu-plugin (si auto-attiva, nessuna installazione) che esporta il DB via **WP-Cron**
+quando il sito è in uso in Local:
 
-Esempio di output:
+- a ogni visita (front o admin) controlla da quanto manca un backup; se è passato più
+  di `DB_AUTOBACKUP_INTERVAL` (default **24h**) pianifica un evento singolo che parte
+  ~20s dopo, senza rallentare la pagina;
+- dump in **PHP puro** (via `$wpdb`): nessun binario esterno, nessun percorso assoluto;
+- **progetto fermo = zero esecuzioni.** Nessun `crontab`, niente da configurare al
+  cambio di Mac;
+- attivo solo se `wp_get_environment_type() === 'local'`.
 
+Parametri sovrascrivibili in `wp-config.php`:
+
+```php
+define('DB_AUTOBACKUP_INTERVAL', DAY_IN_SECONDS); // frequenza massima
+define('DB_AUTOBACKUP_KEEP', 3);                  // dump da conservare
+define('DB_AUTOBACKUP_DISABLE', true);            // disattiva del tutto
 ```
-nomeprogetto_backup_2025-07-30_10-00-00.sql
+
+### 🖐️ Backup manuale on-demand — `export/export-db.sh`
+
+Da lanciare prima di una modifica importante. Portabile: carica l'ambiente da
+`app/.envrc` (rigenerato da Local a ogni avvio) e usa **WP-CLI**, che ricava nome DB,
+credenziali e socket da `wp-config.php` + `MYSQL_HOME`.
+
+```bash
+./export/export-db.sh
 ```
 
-#### `import-db.sh`
+### ♻️ Ripristino — `export/import-db.sh`
 
-Script Bash che permette di **importare manualmente** un file `.sql` precedentemente esportato nel database locale. L’utente può specificare il nome del file da importare oppure usare l’ultimo backup disponibile.
+Senza argomenti importa il dump più recente in `export/db-dumps/`; altrimenti si passa
+il percorso di un `.sql`. Prima di importare **azzera il database** (`wp db reset`) per
+evitare tabelle orfane, poi chiede conferma.
 
----
+```bash
+./export/import-db.sh                      # ultimo dump disponibile
+./export/import-db.sh percorso/al/dump.sql # file specifico
+```
 
-### ⚙️ Configurazione del Cronjob (macOS)
+> ⚠️ Gli script `.sh` richiedono il **sito avviato in Local** e `bash` (compatibili
+> con la 3.2 di macOS). Testati su macOS Apple Silicon.
 
-#### Obiettivo
-
-Eseguire automaticamente `export-db.sh` ogni giorno alle ore 10:00 per salvare un backup aggiornato del database.
-
-#### Passaggi
-
-1. Apri il terminale.
-2. Modifica il file dei cronjob con `nano`:
-   ```bash
-   EDITOR=nano crontab -e
-   ```
-3. Aggiungi questa riga:
-
-   ```bash
-   0 10 * * * /Users/fabrizio/Project/LocalSite/deborahlocastro/app/public/export/export-db.sh
-   ```
-
-   _(Sostituisci il percorso con quello corretto se necessario. Evita spazi nei nomi delle cartelle o gestiscili con `\` oppure racchiudi il percorso tra virgolette.)_
-
-4. Salva con `CTRL + O`, poi premi `Invio`. Esci con `CTRL + X`.
-
-#### Comandi utili
-
-- Verificare i cronjob attivi:
-
-  ```bash
-  crontab -l
-  ```
-
-- Rimuovere tutti i cronjob:
-  ```bash
-  crontab -r
-  ```
-
----
-
-### 📁 Note e consigli
-
-- Assicurati che lo script `export-db.sh` sia eseguibile:
-
-  ```bash
-  chmod +x export-db.sh
-  ```
-
-- Evita percorsi contenenti spazi. In caso contrario:
-  - Usa virgolette: `"/Users/tuonome/Cartella Con Spazi/script.sh"`
-  - Oppure l’escape: `/Users/tuonome/Cartella\ Con\ Spazi/script.sh`
-
----
-
-### 📦 Requisiti
-
-- MySQL/MariaDB CLI tools (es. `mysqldump`, `mysql`)
-- Permessi sufficienti per accedere al database
-- Script testati su macOS (Apple Silicon)
+> 🧹 In arrivo da una vecchia configurazione? Rimuovi l'eventuale cron di sistema
+> obsoleto con `crontab -e` (o `crontab -r` per azzerarlo).
 
 
 
@@ -339,7 +315,7 @@ git push
 
 ## 📂 Gestione dei file ACF (Advanced Custom Fields)
 
-Per mantenere sincronizzati i campi personalizzati tra ambiente locale e produzione, utilizziamo la cartella `assets/acf-json` all'interno del plugin.
+Per mantenere sincronizzati i campi personalizzati tra ambiente locale e produzione, utilizziamo la cartella `assets/acf-json` all'interno del plugin ***custom-tools***.
 
 ### 🔄 Come importare i file ACF
 1. Accedi al **Backoffice di WordPress**.
