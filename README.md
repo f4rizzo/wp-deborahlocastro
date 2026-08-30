@@ -133,6 +133,21 @@ git push
 - Upload e cache (`wp-content/uploads/`, cache varie)
 - File di sistema (`.DS_Store`)
 
+### Tuning prestazioni (fuori da Git — viaggia con l'Export di Local)
+
+Modifiche applicate all'ambiente locale, da rifare se si parte da un `git clone`
+puro invece che da un Import di Local:
+
+- **`wp-config.php`** — le pagine Elementor salvano l'intero layout JSON a ogni
+  revisione; teniamo le revisioni sotto controllo:
+  ```php
+  define( 'WP_POST_REVISIONS', 5 );
+  define( 'AUTOSAVE_INTERVAL', 120 );
+  ```
+- **`../conf/mysql/my.cnf.hbs`** (template MySQL di Local) —
+  `innodb_buffer_pool_size` alzato da `32M` a `256M`; riavviare il sito in Local
+  per applicarlo.
+
 ## Deploy
 
 Per il deploy in produzione:
