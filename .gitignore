@@ -31,6 +31,9 @@ local-xdebuginfo.php
 !/wp-content/themes/
 /wp-content/themes/*
 !/wp-content/themes/hello-theme-child/
+!/wp-content/mu-plugins/
+/wp-content/mu-plugins/*
+!/wp-content/mu-plugins/db-autobackup.php
 
 # Altri file e Directory
 export/db-dumps
