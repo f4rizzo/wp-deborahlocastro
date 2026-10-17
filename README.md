@@ -22,6 +22,10 @@ Il progetto è suddiviso in tre repository separate:
 - **🔧 Custom Plugin**: [custom-tools](https://github.com/f4rizzo/wp-plugin_custom-tools) - Plugin personalizzato per funzionalità specifiche
 - **🎨 Custom Theme**: [hello-theme-child](https://github.com/f4rizzo/wp-theme_hello-theme-child) - Tema child personalizzato
 
+## 🎨 Design
+
+- **Figma (prototipo del rifacimento)**: [Deborah-LoCastro](https://www.figma.com/proto/XyU3jnonUAPe2kHesnn3ZJ/Deborah-LoCastro?node-id=213-4&starting-point-node-id=213%3A4)
+
 
 
 ## ⚙️ Requisiti
