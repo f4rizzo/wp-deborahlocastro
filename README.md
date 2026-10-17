@@ -24,7 +24,8 @@ Il progetto è suddiviso in tre repository separate:
 
 ## 🎨 Design
 
-- **Figma (prototipo del rifacimento)**: [Deborah-LoCastro](https://www.figma.com/proto/XyU3jnonUAPe2kHesnn3ZJ/Deborah-LoCastro?node-id=213-4&starting-point-node-id=213%3A4)
+- **Figma – file di design (editor)**: [Deborah-LoCastro](https://www.figma.com/design/XyU3jnonUAPe2kHesnn3ZJ/Deborah-LoCastro?node-id=213-4)
+- **Figma – prototipo**: [Deborah-LoCastro](https://www.figma.com/proto/XyU3jnonUAPe2kHesnn3ZJ/Deborah-LoCastro?node-id=213-4&starting-point-node-id=213%3A4)
 
 
 
