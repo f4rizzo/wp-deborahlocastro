@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "anthropic.claude-code",
+    "glenn2223.live-sass",
+    "ritwickdey.LiveServer",
+    "bmewburn.vscode-intelephense-client"
+  ]
+}

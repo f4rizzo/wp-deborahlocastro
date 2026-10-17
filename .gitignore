@@ -37,3 +37,7 @@ local-xdebuginfo.php
 
 # Altri file e Directory
 export/db-dumps
+
+# Claude Code – file personali
+CLAUDE.local.md
+.claude/settings.local.json
