@@ -1,30 +1,38 @@
 {
   "liveSassCompile.settings.formats": [
-    // This is Default.
+    // Percorsi relativi al file compilato ("~" = cartella del file .scss).
+    // Tema: sass/*.scss → radice del tema e dist/css/.
+    // Plugin custom-tools: assets/scss/*.scss → assets/css/ (le due voci
+    // scrivono lo stesso file, grazie a savePathReplacementPairs).
     {
       "format": "expanded",
       "extensionName": ".css",
-      "savePath": "/wp-content/themes/hello-theme-child/dist/css"
+      "savePath": "~/../dist/css",
+      "savePathReplacementPairs": {
+        "/custom-tools/assets/dist/css": "/custom-tools/assets/css"
+      }
     },
     {
       "format": "expanded",
       "extensionName": ".css",
-      "savePath": "/wp-content/themes/hello-theme-child"
+      "savePath": "~/..",
+      "savePathReplacementPairs": {
+        "/custom-tools/assets": "/custom-tools/assets/css"
+      }
     }
-    // You can add more
-    // {
-    //   "format": "compressed",
-    //   "extensionName": ".min.css",
-    //   "savePath": "/dist/css"
-    // }
+  ],
+  // Solo questi file vengono compilati (i partial _*.scss li includono loro)
+  "liveSassCompile.settings.includeItems": [
+    "/wp-content/themes/hello-theme-child/sass/style.scss",
+    "/wp-content/themes/hello-theme-child/sass/dlc-blocks.scss",
+    "/wp-content/plugins/custom-tools/assets/scss/modular-gallery.scss"
   ],
   "liveSassCompile.settings.excludeList": [
     "/**/node_modules/**",
     "/**/bootstrap/scss/**",
     "/.vscode/**",
     "/**/wp-admin/**",
-    "/**/wp-includes/**",
-    "/**/wp-content/plugins/**"
+    "/**/wp-includes/**"
   ],
   "liveSassCompile.settings.generateMap": false,
   "liveSassCompile.settings.autoprefix": [],
