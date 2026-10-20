@@ -22,6 +22,12 @@ Il progetto è suddiviso in tre repository separate:
 - **🔧 Custom Plugin**: [custom-tools](https://github.com/f4rizzo/wp-plugin_custom-tools) - Plugin personalizzato per funzionalità specifiche
 - **🎨 Custom Theme**: [hello-theme-child](https://github.com/f4rizzo/wp-theme_hello-theme-child) - Tema child personalizzato
 
+## 📋 Documentazione
+
+- [`AGENTS.md`](AGENTS.md) — guida al progetto per gli agenti (struttura, ambienti, regole)
+- [`docs/ottimizzazioni-wordpress.md`](docs/ottimizzazioni-wordpress.md) — ottimizzazioni fatte e da fare, con le misure
+- [`wp-content/plugins/custom-tools/README.md`](wp-content/plugins/custom-tools/README.md) — plugin: shortcode, pipeline immagini, campi ACF
+
 ## 🎨 Design
 
 - **Figma – file di design (editor)**: [Deborah-LoCastro](https://www.figma.com/design/XyU3jnonUAPe2kHesnn3ZJ/Deborah-LoCastro?node-id=213-4)
@@ -119,6 +125,8 @@ git push
 │   ├── themes/
 │   │   └── hello-theme-child/ # 📌 Submodule
 │   └── uploads/               # Media files (non versionato)
+├── docs/                      # Documentazione (ottimizzazioni WordPress)
+├── export/                    # Backup/ripristino DB, import matrimoni
 ├── index.php                  # WordPress core
 ├── wp-config.php              # Configurazione (versionato se personalizzato)
 ├── .htaccess                  # Configurazione server
@@ -163,7 +171,14 @@ git clone --recursive https://github.com/f4rizzo/wp-deborahlocastro.git
 # Configura wp-config.php per l'ambiente di produzione
 # Configura database
 # Importa contenuti se necessario
+
+# Applica formati, WebP e ritagli di custom-tools alle immagini già caricate
+wp media regenerate --skip-delete --yes
 ```
+
+Prima del lancio vedi le voci "Da fare" in
+[`docs/ottimizzazioni-wordpress.md`](docs/ottimizzazioni-wordpress.md) (page cache,
+font locali, licenza Elementor Pro, sfondi Elementor).
 
 ## Note Tecniche
 
@@ -228,6 +243,29 @@ evitare tabelle orfane, poi chiede conferma.
 ./export/import-db.sh                      # ultimo dump disponibile
 ./export/import-db.sh percorso/al/dump.sql # file specifico
 ```
+
+### 💍 Import di un matrimonio dalla copia della cliente — `export/import-matrimonio.php`
+
+La cliente carica i nuovi matrimoni sulla sua copia (`deborahlocastro.preview.local`).
+I due database **non si possono sovrapporre** (gli ID non coincidono), quindi il
+singolo matrimonio si importa con questo script, che gira nel sito di sviluppo e
+legge la copia della cliente **in sola lettura**:
+
+```bash
+source ../.envrc
+./export/export-db.sh                                  # backup prima di tutto
+wp eval-file export/import-matrimonio.php ../../../deborahlocastropreview/app/public 615 dry-run
+wp eval-file export/import-matrimonio.php ../../../deborahlocastropreview/app/public 615
+```
+
+- primo argomento: la cartella `app/public` del sito sorgente (avviato in Local);
+  secondo: ID o slug del matrimonio; `dry-run` mostra cosa farebbe senza scrivere;
+- copia gli **originali** delle foto: formati, WebP e ritagli vengono rigenerati con
+  le regole attuali di `custom-tools`, come per un nuovo caricamento;
+- ricrea il post con nuovi ID e rimappa le immagini nei campi ACF (immagine,
+  galleria, immagine in evidenza), testi alternativi e ingombro compresi;
+- ripetibile: se il matrimonio è già stato importato si ferma; le foto già
+  importate vengono riusate.
 
 > ⚠️ Gli script `.sh` richiedono il **sito avviato in Local** e `bash` (compatibili
 > con la 3.2 di macOS). Testati su macOS Apple Silicon.

@@ -11,3 +11,5 @@ paths:
 - Variabili (font, breakpoint) in `sass/util/_variables.scss`, mixin in `sass/util/_mixins.scss`. I media query si scrivono con i mixin, non con valori fissi.
 - Stili degli shortcode in `sass/shortcodes/_<nome>.scss`, importati da `sass/shortcodes/_index.scss`.
 - Colori e tipografia globali stanno nel Kit di Elementor: nel CSS non si duplicano.
+- Senza VS Code si compila con le stesse impostazioni di Live Sass Compiler: `npx sass@1.77.8 --no-source-map --style=expanded sass/style.scss style.css` (stessa cosa per `dist/css/style.css`).
+- Le larghezze della Modular Gallery (`max-width`, `gap`, `padding`, breakpoint `xl`) sono replicate nelle costanti `CUSTOM_TOOLS_GALLERY_*` di `custom-tools/shortcodes/modular-gallery.php`, che calcolano gli attributi `sizes`: se cambiano qui, vanno cambiate anche lì.
