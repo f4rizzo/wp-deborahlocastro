@@ -47,12 +47,17 @@ Non sono versionati: il core di WordPress, i plugin di terzi, il tema padre `hel
 - **ACF Pro + ACF Extended Pro.** Post type e gruppi di campi stanno in ACF JSON in `wp-content/plugins/custom-tools/assets/acf-json/` e si sincronizzano da *Campi personalizzati → Sync*.
 - **Post type**: `matrimonio`, `portfolio`, più Side Project e Real Life (definiti in ACF JSON).
 - **Shortcode di custom-tools**: `matrimonio_titolo`, `nomi_coniugi`, `info_matrimonio`, `portfolio_lightbox_item`, `modular_gallery`.
+  - `modular_gallery` accetta parametri facoltativi: `layout` (`modulare` di default, `colonna`, `coppia`, `trio`, `griglia`, `masonry`), `colonne` / `colonne_tablet` / `colonne_mobile`, `breakpoint`, `proporzione`, `gap`, `larghezza`, `didascalie`, `nitide`. Valori ammessi ed esempi sono nel README del plugin. Senza parametri l'output resta quello storico: le gallerie già pubblicate non cambiano.
+  - Nel layout `modulare` una `tall` che resterebbe senza foto accanto (in fondo alla galleria o prima di una `wide`) viene mostrata come standard, senza cambiare l'ordine delle foto.
 - **Query Elementor**: `home_portfolio_query`, che filtra il portfolio in home tramite il campo ACF `mostra_in_home`.
-- **Pipeline immagini** (`custom-tools/inc/images.php`, dettagli nel README del plugin): soglia 2048px, formati in WebP, metadati EXIF/XMP tolti dai file generati, formati custom `portfolio_thumb` (454) e `gallery_1200`. Ogni fotografia riceve al caricamento anche il ritaglio con l'orientamento opposto (verticale 3:4 / orizzontale 3:2): il campo ACF `gallery_image_size` dell'immagine (vuoto, `wide`, `tall`) sceglie l'ingombro nella galleria e la cliente può cambiarlo in ogni momento. `gallery_wide` e `gallery_tall` non vengono più generati.
-- **Shortcode**: nomi e parametri non si cambiano (sono usati nei template Elementor). Le larghezze della galleria sono replicate nelle costanti `CUSTOM_TOOLS_GALLERY_*` di `modular-gallery.php` e nello SCSS `_modular-gallery.scss`: se cambiano in uno, vanno cambiate nell'altro.
+- **Pipeline immagini** (`custom-tools/inc/images.php`, dettagli nel README del plugin): soglia 2048px, formati in WebP, metadati EXIF/XMP tolti dai file generati, formati custom `portfolio_thumb` (454) e `gallery_1200`. Ogni fotografia riceve al caricamento anche il ritaglio con l'orientamento opposto (verticale 3:4 / orizzontale 3:2): il campo ACF `gallery_image_size` dell'immagine (vuoto, `wide`, `tall`) sceglie l'ingombro nella galleria e la cliente può cambiarlo in ogni momento. Il campo `gallery_crop_position` (centro, sinistra/destra per le orizzontali, alto/basso per le verticali) sceglie quale parte della foto tenere: al salvataggio i ritagli vengono rifatti. `gallery_wide` e `gallery_tall` non vengono più generati.
+- **Shortcode**: nomi e parametri non si cambiano (sono usati nei template Elementor).
+- **Stili della `modular_gallery`**: stanno nel plugin, non nel tema. `custom-tools/assets/scss/modular-gallery.scss` si compila in `assets/css/modular-gallery.css`, che il plugin carica prima del CSS del tema.
+  - Larghezze, gap, breakpoint e colonne di default stanno **solo** in `assets/scss/_modular-gallery-settings.scss`. Da quel file li legge lo SCSS, con `var(--mg-*, default)`, e li legge anche il PHP (`custom_tools_gallery_settings()`), che li usa per `sizes` e per i valori ammessi. Un valore si cambia lì, poi si ricompila.
+  - Il tema imposta solo le variabili di aspetto (`--mg-didascalia-*`) in `sass/shortcodes/_modular-gallery.scss`.
 - **Font**: Anton (titoli), Literata (testo), Source Sans 3 (UI). I file sono in `hello-theme-child/assets/fonts/`.
 - **Tema child**:
-  - lo SCSS sta in `sass/` e viene compilato da VS Code *Live Sass Compiler* in `style.css` (versionato) e `dist/css/` (ignorato);
+  - lo SCSS sta in `sass/` e viene compilato da VS Code *Live Sass Compiler* in `style.css` (versionato) e `dist/css/` (ignorato). La configurazione è in `.vscode/settings.json` e compila solo i file elencati in `includeItems`: `style.scss`, `dlc-blocks.scss` del tema e `modular-gallery.scss` del plugin;
   - `elementor-templates/*.json` sono export dei template Elementor, tenuti come backup e riferimento.
 
 ## Comandi
@@ -89,7 +94,7 @@ git submodule status                       # stato dei submodule
 - **Prima di ogni operazione che scrive sul DB** (search-replace, import, cancellazioni, modifiche alle opzioni) si esegue `export/export-db.sh`.
 - **Layout Elementor**: si modificano dall'editor. Non si modifica a mano `_elementor_data` nel DB.
 - **Campi ACF**: si modificano dall'admin, che rigenera da solo il JSON. Non si modificano a mano i file in `acf-json/`.
-- **CSS**: si scrive in `sass/`, mai direttamente in `style.css`, che è un file compilato. Senza VS Code si compila con le stesse impostazioni di Live Sass Compiler: `npx sass@1.77.8 --no-source-map --style=expanded sass/style.scss style.css` (e `dist/css/style.css`).
+- **CSS**: si scrive in `sass/` del tema o in `assets/scss/` del plugin, mai direttamente nei `.css` compilati. Senza VS Code si compila con le stesse impostazioni di Live Sass Compiler: `npx sass@1.77.8 --no-source-map --style=expanded sass/style.scss style.css` (e `dist/css/style.css`) nel tema, `npx sass@1.77.8 --no-source-map --style=expanded assets/scss/modular-gallery.scss assets/css/modular-gallery.css` nel plugin.
 - **Documentazione**: ogni modifica a plugin, tema o script va riportata nei README e in questo file; le ottimizzazioni in `docs/ottimizzazioni-wordpress.md`.
 - **PHP**:
   - `if (!defined('ABSPATH')) exit;` in testa a ogni file;
