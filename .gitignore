@@ -1,11 +1,13 @@
 # Ignora tutto tranne il custom
 .DS_Store
+*.swp
 
 # Core WordPress
 /wp-admin/
 /wp-includes/
 index.php
 license.txt
+licenza.html
 readme.html
 wp-activate.php
 wp-blog-header.php
