@@ -1,7 +1,6 @@
 ---
 name: commit-submodule
 description: Commit e push di una modifica nel tema child o nel plugin custom-tools (submodule), poi aggiornamento del puntatore nel repository principale.
-disable-model-invocation: true
 argument-hint: "[tema|plugin] [messaggio di commit]"
 ---
 
