@@ -3,7 +3,7 @@
 Registro delle ottimizzazioni del sito: cosa è già fatto (nel codice o nella configurazione) e cosa resta da fare, con chi lo deve fare e dove.
 Va aggiornato ogni volta che si chiude o si aggiunge una voce.
 
-Ultimo aggiornamento: 17/10/2026.
+Ultimo aggiornamento: 21/10/2026.
 
 ## Misure di riferimento
 
@@ -65,10 +65,12 @@ Dettagli in `wp-content/plugins/custom-tools/README.md`, sezione 3.
 - [ ] Campo ACF `gallery_image_size`: la location è solo `image/jpeg`. Se la cliente carica WebP o HEIC il campo non compare. Da allargare dall'admin di ACF (non a mano nel JSON).
 - [ ] Possibile miglioramento: un campo "punto di ritaglio" (sinistra / centro / destra) per scegliere quale porzione mostrare nei ritagli, oggi sempre centrati.
 
+- [ ] **Preload dell'hero dei matrimoni** (`custom-tools/inc/images.php`, sezione 5): precarica sempre il file da 2048px, perché nel template Elementor l'hero è uno sfondo CSS. Con il template nativo (`single-matrimonio.php`) l'hero è un `<img>` con `srcset`: su smartphone la foto viene scaricata due volte (2048px precaricato + 1200px scelto dal `srcset`, 344KB + 175KB nella Tonnara). Quando si adotta il template nativo, il preload va fatto come negli eventi (`imagesrcset` + `imagesizes`, in `custom-tools/inc/eventi.php`).
+
 ### Plugin
 
 - [ ] **`elementor-pro-activator` (GPL Times)**: attivatore non ufficiale. È un rischio di sicurezza e blocca gli aggiornamenti di Elementor Pro. Serve una licenza Elementor Pro ufficiale.
-- [ ] **Versioni Elementor**: dev 3.35.6 / Pro 3.35.1, copia cliente 4.3.5 / Pro 3.31.2. Allinearle prima della messa online (il core 4.x con il Pro 3.31 può rompere i widget).
+- [ ] **Versioni Elementor**: dev 4.3.5 / Pro 4.3.2 (21/10/2026), copia cliente 4.3.5 / Pro 3.31.2. Allinearle prima della messa online (il core 4.x con il Pro 3.31 può rompere i widget).
 - [ ] Disattivare a regime: All-in-One WP Migration + Unlimited Extension, Regenerate Thumbnails (c'è `wp media regenerate`), WordPress Importer.
 - [ ] Image Optimizer (Elementor): installato e configurato ma inattivo. Con la pipeline WebP di `custom-tools` non serve; se lo si attiva, la conversione WebP va lasciata a uno solo dei due.
 - [ ] ACF Extended Pro: verificare se serve davvero (i JSON hanno impostazioni `acfe_*`, nessuna funzione ACFE nel codice).

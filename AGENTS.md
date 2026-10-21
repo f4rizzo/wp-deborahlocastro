@@ -43,9 +43,15 @@ Non sono versionati: il core di WordPress, i plugin di terzi, il tema padre `hel
 ## Stack
 
 - **WordPress 7.1**. In Local PHP 8.4, online PHP 8.1: **il codice deve funzionare con PHP 8.1**.
-- **Elementor + Elementor Pro**: in dev 3.35.x / 3.35.x, online 4.2.4 / 3.31.2. Le versioni sono da allineare prima di andare in produzione.
-- **ACF Pro + ACF Extended Pro.** Post type e gruppi di campi stanno in ACF JSON in `wp-content/plugins/custom-tools/assets/acf-json/` e si sincronizzano da *Campi personalizzati → Sync*.
-- **Post type**: `matrimonio`, `portfolio`, più Side Project e Real Life (definiti in ACF JSON).
+- **Elementor + Elementor Pro**: in dev 4.3.5 / 4.3.2 (verificato il 21/10/2026), online 4.2.4 / 3.31.2. Le versioni sono da allineare prima di andare in produzione.
+- **ACF Pro + ACF Extended Pro.** Post type e gruppi di campi stanno in ACF JSON in `wp-content/plugins/custom-tools/assets/acf-json/` e si sincronizzano da *Campi personalizzati → Sync*. ACF Extended scrive il JSON solo per i gruppi con la sincronizzazione automatica JSON attiva (`acfe_autosync: ["json"]`): va attivata su ogni gruppo nuovo.
+- **Post type**: `matrimonio`, `portfolio`, `evento`, più Side Project e Real Life (definiti in ACF JSON).
+- **Eventi (prova della pagina a blocchi per i matrimoni, branch `feature/eventi`)**: un evento si compila nell'editor a blocchi.
+  - Barra laterale: gruppo ACF "Dettagli evento" con i nomi, che hanno le stesse chiavi dei matrimoni (`nome_coniuge_1/2`), più l'immagine in evidenza, che è la foto dell'hero.
+  - Pagina: blocchi ACF `dlc/hero`, `dlc/testo`, `dlc/foto-larga`, `dlc/info`, `dlc/galleria` (`custom-tools/blocks/`, campi nei gruppi "Blocco: …"), riordinabili, disponibili solo negli eventi.
+  - Ogni evento nuovo parte con la struttura di un matrimonio (`template` del post type in `custom-tools/inc/eventi.php`); cambiarla vale solo per gli eventi nuovi.
+  - Resa: `hello-theme-child/single-evento.php`. Il markup delle sezioni viene dalle funzioni `dlc_sezione_*()` (`custom-tools/shortcodes/dlc-blocchi.php`), le stesse di `single-matrimonio.php`: le due pagine escono identiche.
+  - Evento di prova: ID 1148, `/eventi/prova-tonnara-di-scopello/`, con i dati del matrimonio 733.
 - **Shortcode di custom-tools**: `matrimonio_titolo`, `nomi_coniugi`, `info_matrimonio`, `portfolio_lightbox_item`, `modular_gallery`.
   - `modular_gallery` accetta parametri facoltativi: `layout` (`modulare` di default, `colonna`, `coppia`, `trio`, `griglia`, `masonry`), `colonne` / `colonne_tablet` / `colonne_mobile`, `breakpoint`, `proporzione`, `gap`, `larghezza`, `didascalie`, `nitide`. Valori ammessi ed esempi sono nel README del plugin. Senza parametri la galleria resta quella storica: modulare, due colonne da 1440px.
   - Il layout `modulare` corregge gli ingombri perché su desktop non restino buchi, senza cambiare l'ordine delle foto. Una `tall` senza foto accanto diventa standard. L'ultima foto non è mai `tall`: se le due prima sono standard affiancate, la `tall` va a destra e le due si impilano a sinistra. L'ultima foto, se resta da sola nella riga, diventa `wide`. Nel `trio`, in fondo, due foto si affiancano e una sola diventa `wide`.
